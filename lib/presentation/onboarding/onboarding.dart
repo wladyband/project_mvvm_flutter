@@ -1,8 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:register_image/presentation/resources/assets_manager.dart';
 import 'package:register_image/presentation/resources/color_manager.dart';
+import 'package:register_image/presentation/resources/routes_manager.dart';
 import 'package:register_image/presentation/resources/strings_manager.dart';
 import 'package:register_image/presentation/resources/values_manager.dart';
 
@@ -34,7 +37,8 @@ class _OnBoardingViewState extends State<OnBoardingView> {
     return Scaffold(
       backgroundColor: ColorManager.white,
       appBar: AppBar(
-        elevation: AppSize.s1_5,
+        backgroundColor: ColorManager.white,
+        elevation: AppSize.s0,
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: ColorManager.white,
           statusBarBrightness: Brightness.dark,
@@ -60,17 +64,105 @@ class _OnBoardingViewState extends State<OnBoardingView> {
             Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
-                  onPressed: () {},
-                  child: const Text(
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, Routes.loginRoute);
+                  },
+                  child: Text(
                     AppStrings.skip,
+                    style: Theme.of(context).textTheme.subtitle2,
                     textAlign: TextAlign.end,
                   ),
                 )),
             // add layout for indicator and arrows
+            _getBottomSheetWidget()
           ],
         ),
       ),
     );
+  }
+
+  Widget _getBottomSheetWidget() {
+    return Container(
+      color: ColorManager.primary,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          // left arrow
+          Padding(
+            padding: const EdgeInsets.all(AppPadding.p14),
+            child: GestureDetector(
+              child: SizedBox(
+                height: AppSize.s20,
+                width: AppSize.s20,
+                child: SvgPicture.asset(ImageAssets.leftArrowIc),
+              ),
+              onTap: () {
+                // go to previous slide
+                _pageController.animateToPage(_getPreviousIndex(),
+                    duration:
+                        const Duration(milliseconds: DurationConstant.d300),
+                    curve: Curves.bounceInOut);
+              },
+            ),
+          ),
+
+          // circles indicator
+          Row(
+            children: [
+              for (int i = 0; i < _list.length; i++)
+                Padding(
+                  padding: const EdgeInsets.all(AppPadding.p8),
+                  child: _getProperCircle(i),
+                )
+            ],
+          ),
+
+          // right arrow
+          Padding(
+            padding: const EdgeInsets.all(AppPadding.p14),
+            child: GestureDetector(
+              child: SizedBox(
+                height: AppSize.s20,
+                width: AppSize.s20,
+                child: SvgPicture.asset(ImageAssets.rightarrowIc),
+              ),
+              onTap: () {
+                // go to next slide
+                _pageController.animateToPage(_getNextIndex(),
+                    duration:
+                        const Duration(milliseconds: DurationConstant.d300),
+                    curve: Curves.bounceInOut);
+              },
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  int _getPreviousIndex() {
+    int previousIndex = _currentIndex--; // -1
+    if (previousIndex == -1) {
+      _currentIndex =
+          _list.length - 1; // infinite loop to go to the length of slider list
+    }
+    return _currentIndex;
+  }
+
+  int _getNextIndex() {
+    int nextIndex = _currentIndex++; // +1
+    if (nextIndex >= _list.length) {
+      _currentIndex = 0; // infinite loop to go to first item inside the slider
+    }
+    return _currentIndex;
+  }
+
+  Widget _getProperCircle(int index) {
+    if (index == _currentIndex) {
+      return SvgPicture.asset(ImageAssets.hollowCircleIc); // selected slider
+    } else {
+      return SvgPicture.asset(ImageAssets.solidCircleIc); // unselected slider
+    }
   }
 }
 
@@ -84,7 +176,7 @@ class OnBoardingPage extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        SizedBox(height: AppSize.s40),
+        const SizedBox(height: AppSize.s40),
         Padding(
           padding: const EdgeInsets.all(AppPadding.p8),
           child: Text(
@@ -101,7 +193,7 @@ class OnBoardingPage extends StatelessWidget {
             style: Theme.of(context).textTheme.subtitle1,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: AppSize.s60,
         ),
         SvgPicture.asset(_sliderObject.image)
