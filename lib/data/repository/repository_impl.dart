@@ -21,7 +21,7 @@ class RepositoryImpl extends Repository {
       final response = await _remoteDataSource.login(loginRequest);
 
       if (response.status == 0) // success
-          {
+      {
         // return data (success)
         // return right
         return Right(response.toDomain());
