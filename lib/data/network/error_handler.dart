@@ -107,9 +107,9 @@ class ResponseCode {
   static const int FORBIDDEN = 403; // failure, api rejected the request
   static const int UNAUTHORISED = 401; // failure user is not authorised
   static const int NOT_FOUND =
-  404; // failure, api url is not correct and not found
+      404; // failure, api url is not correct and not found
   static const int INTERNAL_SERVER_ERROR =
-  500; // failure, crash happened in server side
+      500; // failure, crash happened in server side
 
   // local status code
   static const int DEFAULT = -1;
@@ -146,4 +146,9 @@ class ResponseMessage {
   static const String CACHE_ERROR = "Cache error, try again later";
   static const String NO_INTERNET_CONNECTION =
       "Please check your internet connection";
+}
+
+class ApiInternalStatus {
+  static const int SUCCESS = 0;
+  static const int FAILURE = 1;
 }
