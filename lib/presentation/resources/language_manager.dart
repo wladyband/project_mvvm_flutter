@@ -12,3 +12,4 @@ extension LanguageTypeExtension on LanguageType {
         return PORTUGUESES;
     }
   }
+}
