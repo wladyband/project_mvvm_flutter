@@ -3,7 +3,7 @@
 
 import '/app/extensions.dart';
 import 'package:register_image/data/responses/responses.dart';
-import 'package:register_image/domain/model.dart';
+import 'package:register_image/domain/model/model.dart';
 
 const EMPTY = "";
 const ZERO = 0;
