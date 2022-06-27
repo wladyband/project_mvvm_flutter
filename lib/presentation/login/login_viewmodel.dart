@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:register_image/presentation/common/freezed_data_classes.dart';
+
 import '/presentation/base/baseviewmodel.dart';
 
 class LoginViewModel extends BaseViewModel
@@ -7,6 +9,9 @@ class LoginViewModel extends BaseViewModel
       StreamController<String>.broadcast();
   StreamController _passwordStreamController =
       StreamController<String>.broadcast();
+
+
+  var loginObject = LoginObject("","");
 
   // inputs
   @override
