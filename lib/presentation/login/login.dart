@@ -1,9 +1,10 @@
+import '/presentation/login/login_viewmodel.dart';
+import '/presentation/resources/assets_manager.dart';
+import '/presentation/resources/color_manager.dart';
+import '/presentation/resources/strings_manager.dart';
+import '/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:register_image/presentation/login/login_viewmodel.dart';
-import 'package:register_image/presentation/resources/assets_manager.dart';
-import 'package:register_image/presentation/resources/color_manager.dart';
-import 'package:register_image/presentation/resources/values_manager.dart';
+import 'package:flutter_svg/svg.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -42,7 +43,7 @@ class _LoginViewState extends State<LoginView> {
   Widget _getContentWidget() {
     return Scaffold(
       body: Container(
-        padding: const EdgeInsets.only(top: AppPadding.p100),
+        padding: EdgeInsets.only(top: AppPadding.p100),
         color: ColorManager.white,
         child: SingleChildScrollView(
           child: Form(
@@ -59,6 +60,32 @@ class _LoginViewState extends State<LoginView> {
                       return TextFormField(
                         keyboardType: TextInputType.emailAddress,
                         controller: _userNameController,
+                        decoration: InputDecoration(
+                            hintText: AppStrings.username,
+                            labelText: AppStrings.username,
+                            errorText: (snapshot.data ?? true)
+                                ? null
+                                : AppStrings.usernameError
+                        ),
+                      );
+                    },
+                  ),),
+                const SizedBox(height: AppSize.s28),
+                Padding(padding: const EdgeInsets.only(
+                    left: AppPadding.p28, right: AppPadding.p28),
+                  child: StreamBuilder<bool>(
+                    stream: _viewModel.outputIsPasswordValid,
+                    builder: (context, snapshot) {
+                      return TextFormField(
+                        keyboardType: TextInputType.visiblePassword,
+                        controller: _passwordController,
+                        decoration: InputDecoration(
+                            hintText: AppStrings.password,
+                            labelText: AppStrings.password,
+                            errorText: (snapshot.data ?? true)
+                                ? null
+                                : AppStrings.passwordError
+                        ),
                       );
                     },
                   ),)
