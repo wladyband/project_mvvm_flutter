@@ -14,11 +14,11 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  LoginViewModel _viewModel =
+  final LoginViewModel _viewModel =
       LoginViewModel(null); // todo pass here login useCase
 
-  TextEditingController _userNameController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _userNameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   _bind() {
@@ -37,7 +37,7 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return _getContentWidget();
   }
 
   Widget _getContentWidget() {
@@ -50,7 +50,7 @@ class _LoginViewState extends State<LoginView> {
             key: _formKey,
             child: Column(
               children: [
-                SvgPicture.asset(ImageAssets.loginIc),
+                const Image(image: AssetImage(ImageAssets.splashLogo)),
                 const SizedBox(height: AppSize.s28),
                 Padding(
                   padding: const EdgeInsets.only(
