@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:register_image/app/di.dart';
 import 'package:register_image/presentation/forgot_password/forgot_password.dart';
 import 'package:register_image/presentation/login/login.dart';
 import 'package:register_image/presentation/main/main_view.dart';
@@ -17,12 +18,14 @@ class Routes {
   static const String mainRoute = "/main";
   static const String storeDetailsRoute = "/storeDetails";
 }
+
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case Routes.splashRoute:
         return MaterialPageRoute(builder: (_) => SplashView());
       case Routes.loginRoute:
+        initLoginModule();
         return MaterialPageRoute(builder: (_) => LoginView());
       case Routes.onBoardingRoute:
         return MaterialPageRoute(builder: (_) => OnBoardingView());
@@ -38,6 +41,7 @@ class RouteGenerator {
         return unDefinedRoute();
     }
   }
+
   static Route<dynamic> unDefinedRoute() {
     return MaterialPageRoute(
         builder: (_) => Scaffold(

@@ -1,12 +1,12 @@
-import 'package:register_image/presentation/resources/routes_manager.dart';
-
+import '/app/di.dart';
 import '/presentation/login/login_viewmodel.dart';
 import '/presentation/resources/assets_manager.dart';
 import '/presentation/resources/color_manager.dart';
+import '/presentation/resources/routes_manager.dart';
 import '/presentation/resources/strings_manager.dart';
 import '/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -16,7 +16,7 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  LoginViewModel _viewModel = LoginViewModel(loginUseCase);
+  LoginViewModel _viewModel = instance<LoginViewModel>();
 
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();

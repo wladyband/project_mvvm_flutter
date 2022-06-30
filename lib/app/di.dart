@@ -1,3 +1,6 @@
+import 'package:register_image/domain/usecase/login_usecase.dart';
+import 'package:register_image/presentation/login/login_viewmodel.dart';
+
 import '/data/data_source/remote_data_source.dart';
 import '/data/network/app_api.dart';
 import '/data/network/dio_factory.dart';
@@ -40,4 +43,11 @@ Future<void> initAppModule() async {
   // repository
   instance.registerLazySingleton<Repository>(
           () => RepositoryImpl(instance(), instance()));
+}
+
+initLoginModule(){
+  if(!GetIt.I.isRegistered<LoginUseCase>()){
+    instance.registerFactory<LoginUseCase>(() => LoginUseCase(instance()));
+    instance.registerFactory<LoginViewModel>(() => LoginViewModel(instance()));
+  }
 }
